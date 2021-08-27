@@ -7,9 +7,8 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
-    "dev:server": "ts-node-dev --watch --respawn --transpile-only --ignore-watch node_modules -r tsconfig-paths/register src/shared/infra/http/server.ts",
-    "dev:server-debug": "ts-node-dev --inspect --respawn --transpile-only --ignore-watch node_modules -r tsconfig-paths/register src/shared/infra/http/server.ts",
-    "typeorm": "ts-node-dev  -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/config/typeorm.ts",
+    "dev:server": "ts-node-dev --watch --respawn --transpile-only --ignore-watch node_modules -r tsconfig-paths/register src/server.ts",
+    "dev:server-debug": "ts-node-dev --inspect --respawn --transpile-only --ignore-watch node_modules -r tsconfig-paths/register src/server.ts",
     "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
     "start": "yarn build && node dist/server.js"
   },
@@ -20,6 +19,8 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^8.5.1",
+    "knex": "^0.95.10",
+    "pg": "^8.7.1",
     "slugify": "^1.5.0",
     "uuidv4": "^6.2.7"
   },

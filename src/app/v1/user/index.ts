@@ -1,36 +1,30 @@
-import { Router } from 'express';
+import { User } from '@model/user';
 
-const userRoute = Router();
-
-/******************** INDEX ********************/
-userRoute.get('/', async (request, response) => {
-  // const indexProductsService = new IndexCatalogService();
-  // const data = await indexProductsService.run();
-
-  const data = [
-    {
-      id: 1,
-      name: 'jose',
-    },
-    {
-      id: 2,
-      name: 'joao',
-    },
-  ];
-
-  return response.json(data);
-});
-
-/******************** SHOW ********************/
-userRoute.get('/:id', async (request, response) => {
-  const { id } = request.params;
-  // const showProductsService = new ShowCatalogService();
-  // const data = await showProductsService.run(id);
-
-  return response.json({
-    id,
+const usersMock: User[] = [
+  {
+    id: '1',
     name: 'jose',
-  });
-});
+  },
+  {
+    id: '2',
+    name: 'joao',
+  },
+];
 
-export default userRoute;
+export class UserRepository {
+  public async getUsers(): Promise<User[]> {
+    const users = usersMock;
+
+    return users;
+  }
+
+  public async getUser(id: string): Promise<User | null> {
+    const user = usersMock.filter(user => user.id === id)[0];
+
+    if (user) {
+      return user;
+    }
+
+    return null;
+  }
+}

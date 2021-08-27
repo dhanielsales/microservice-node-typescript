@@ -1,36 +1,30 @@
-import { Router } from 'express';
+import { Product } from '@model/product';
 
-const productRoute = Router();
-
-/******************** INDEX ********************/
-productRoute.get('/', async (request, response) => {
-  // const indexProductsService = new IndexCatalogService();
-  // const data = await indexProductsService.run();
-
-  const data = [
-    {
-      id: 1,
-      name: 'pão',
-    },
-    {
-      id: 2,
-      name: 'leite',
-    },
-  ];
-
-  return response.json(data);
-});
-
-/******************** SHOW ********************/
-productRoute.get('/:id', async (request, response) => {
-  const { id } = request.params;
-  // const showProductsService = new ShowCatalogService();
-  // const data = await showProductsService.run(id);
-
-  return response.json({
-    id,
+const productsMock: Product[] = [
+  {
+    id: '1',
+    name: 'pão',
+  },
+  {
+    id: '2',
     name: 'leite',
-  });
-});
+  },
+];
 
-export default productRoute;
+export class ProductsRepository {
+  public async getProducts(): Promise<Product[]> {
+    const products = productsMock;
+
+    return products;
+  }
+
+  public async getProduct(id: string): Promise<Product | null> {
+    const product = productsMock.filter(product => product.id === id)[0];
+
+    if (product) {
+      return product;
+    }
+
+    return null;
+  }
+}

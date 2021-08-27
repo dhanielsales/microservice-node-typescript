@@ -1,9 +1,11 @@
 # curso-node
 
-## Create a DB
+## Create a DBs
 
 ```
-docker run --name ecommerce-katia -e "POSTGRES_USER=root" -e "POSTGRES_PASSWORD=db123" -e "POSTGRES_DB=main" -d -p 5432:5432 postgres
+docker run --name postgres-test -e "POSTGRES_USER=user" -e "POSTGRES_PASSWORD=password" -e "POSTGRES_DB=main" -d -p 5432:5432 postgres
+docker run --name mongodb-test -e "MONGO_INITDB_ROOT_USERNAME=user" -e "MONGO_INITDB_ROOT_PASSWORD=password" -e "MONGO_INITDB_DATABASE=main" -d -p 27017:27017 mongo
+
 ```
 
 ## Schemas

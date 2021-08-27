@@ -17,7 +17,7 @@ productRoute.get('/:id', async (request, response) => {
   const repository = new ProductsRepository();
   const data = await repository.getProduct(id);
 
-  // TODO: transferir validação para dentro do repository
+  // TODO: transferir validação para dentro do repository ?
 
   return response.status(data ? 200 : 404).json(data);
 });

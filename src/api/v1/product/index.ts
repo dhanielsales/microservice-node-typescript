@@ -1,22 +1,12 @@
+import { ProductsRepository } from '@app/v0/product';
 import { Router } from 'express';
 
 const productRoute = Router();
 
 /******************** INDEX ********************/
 productRoute.get('/', async (request, response) => {
-  // const indexProductsService = new IndexCatalogService();
-  // const data = await indexProductsService.run();
-
-  const data = [
-    {
-      id: 1,
-      name: 'pão',
-    },
-    {
-      id: 2,
-      name: 'leite',
-    },
-  ];
+  const repository = new ProductsRepository();
+  const data = await repository.getProducts();
 
   return response.json(data);
 });
@@ -24,13 +14,12 @@ productRoute.get('/', async (request, response) => {
 /******************** SHOW ********************/
 productRoute.get('/:id', async (request, response) => {
   const { id } = request.params;
-  // const showProductsService = new ShowCatalogService();
-  // const data = await showProductsService.run(id);
+  const repository = new ProductsRepository();
+  const data = await repository.getProduct(id);
 
-  return response.json({
-    id,
-    name: 'leite',
-  });
+  // TODO: transferir validação para dentro do repository ?
+
+  return response.status(data ? 200 : 404).json(data);
 });
 
 export default productRoute;
