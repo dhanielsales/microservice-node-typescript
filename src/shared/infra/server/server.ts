@@ -22,7 +22,7 @@ export async function initServer(app: App) {
 
   server.listen(3333, () => {
     // Printa todas as rotas da aplicação
-    printRoutes(server._router.stack);
+    // printRoutes(server._router.stack);
 
     new AppLogger({
       date: new Date(),

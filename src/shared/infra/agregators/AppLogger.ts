@@ -7,6 +7,7 @@ interface AppLoggerConfig {
   date: Date;
   message: string;
   type: Type;
+  error?: any;
 }
 
 const typeColors = {
@@ -20,7 +21,7 @@ export default class AppLogger {
   public readonly type: Type;
   public readonly message: string;
 
-  constructor({ date, message, type }: AppLoggerConfig) {
+  constructor({ date, message, type, error }: AppLoggerConfig) {
     this.date = date;
     this.message = message;
     this.type = type;
@@ -28,6 +29,10 @@ export default class AppLogger {
     const formatedType = colorizeText(type, typeColors[type] as any);
     const formatedDate = format(new Date(), 'dd-MM-yyyy HH:mm:ss');
 
-    console.log(`[${formatedType}] ${colorizeText(formatedDate, 'bright')} - ${message}`);
+    const finalMessage = error
+      ? `[${formatedType}] ${colorizeText(formatedDate, 'bright')} - ${message} - ${error}`
+      : `[${formatedType}] ${colorizeText(formatedDate, 'bright')} - ${message}`;
+
+    console.log(finalMessage);
   }
 }

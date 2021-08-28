@@ -4,7 +4,7 @@ import { ProductApi } from '@api/v0/product';
 import { UserApi } from '@api/v0/user';
 
 export class V0 {
-  public readonly router: Router = Router();
+  router: Router = Router();
   public readonly userApi: UserApi;
   public readonly productApi: ProductApi;
 
@@ -13,7 +13,7 @@ export class V0 {
     this.userApi = new UserApi();
     this.productApi = new ProductApi();
 
-    this.router.use('user', this.userApi.router);
-    this.router.use('product/', this.productApi.router);
+    this.router.use('/user', this.userApi.router);
+    this.router.use('/product', this.productApi.router);
   }
 }

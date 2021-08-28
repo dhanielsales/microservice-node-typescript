@@ -1,9 +1,8 @@
 import { ProductsRepository } from '@app/v1/product';
-
 import { Router, Request, Response } from 'express';
 
 export class ProductApi {
-  router: Router = Router();
+  public readonly router: Router = Router();
 
   constructor() {
     this.router.get('/', this.index);

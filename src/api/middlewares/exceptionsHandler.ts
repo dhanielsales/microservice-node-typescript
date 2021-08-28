@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import AppError from '@shared/errors/AppError';
+import AppLogger from '@shared/infra/agregators/AppLogger';
 
 export function exceptionsHandler(
   err: Error,
@@ -14,7 +15,14 @@ export function exceptionsHandler(
     });
   }
 
-  console.error(err);
+  // console.error(err);
+
+  new AppLogger({
+    date: new Date(),
+    message: `Error on route ${request.path}`,
+    type: 'ERROR',
+    error: err,
+  });
 
   return response.status(500).json({
     status: 'error',

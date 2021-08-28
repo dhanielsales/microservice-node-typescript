@@ -6,10 +6,10 @@ import { V1 } from '@api/v1';
 import { health } from '@api/health';
 
 export class Api {
-  private router: Router = Router();
+  public readonly router: Router = Router();
   private health: Router;
   private v1: V1;
-  private v0: V0 = new V0();
+  private v0: V0;
 
   constructor() {
     // Instancia todas as versões da API
@@ -22,16 +22,15 @@ export class Api {
     this.applyMiddlewares();
   }
 
-  public init(): Router {
+  public init() {
     return this.router;
   }
 
   private instanceVersions() {
     // Cria instancia de todas as versões da API
     this.v1 = new V1();
-    // this.v0 = new V0();
+    this.v0 = new V0();
     this.health = health;
-
     // TODO: Verificar o env por quais versões de API devem subir
   }
 

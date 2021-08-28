@@ -17,9 +17,9 @@ export class V1 {
     this.productApi = new ProductApi();
     this.preferenceApi = new PreferenceApi();
 
-    this.router.use('user/', this.userApi.router);
-    this.router.use('product/', this.productApi.router);
-    this.router.use('preference/', this.preferenceApi.router);
+    this.router.use('/user', this.userApi.router);
+    this.router.use('/product', this.productApi.router);
+    this.router.use('/preference', this.preferenceApi.router);
   }
 }
 
