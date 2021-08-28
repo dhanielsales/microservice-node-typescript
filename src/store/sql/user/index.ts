@@ -37,4 +37,10 @@ export class UserStore {
 
     return newUsers;
   }
+
+  public async removeOne(id: string): Promise<number | null> {
+    const user = await this.connection.delete().from('users').where({ id });
+
+    return user;
+  }
 }
