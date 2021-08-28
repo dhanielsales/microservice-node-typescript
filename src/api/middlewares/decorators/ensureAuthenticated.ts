@@ -12,6 +12,7 @@ interface TokenPayload {
   sub: string;
 }
 
+// TODO: Incluir validação com ACL Roles e Permissions
 export function EnsureAuthenticated(): Decorator {
   return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value;
@@ -33,10 +34,7 @@ export function EnsureAuthenticated(): Decorator {
           id: sub,
         };
 
-        next();
-
         await originalMethod(request, response);
-
         return descriptor;
       } catch {
         throw new AppError('Invalid JWT token.', 401);

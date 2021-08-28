@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { exceptionsHandler } from './middlewares/exceptionsHandler';
+import { exceptionsHandler } from '@api/middlewares/conventional/exceptionsHandler';
 
 import { V0 } from '@api/v0';
 import { V1 } from '@api/v1';

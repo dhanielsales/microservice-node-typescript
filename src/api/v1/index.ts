@@ -22,18 +22,3 @@ export class V1 {
     this.router.use('/preference', this.preferenceApi.router);
   }
 }
-
-// import { Router } from 'express';
-
-// import { ProductApi } from '@api/v1/product';
-// import { UserApi } from '@api/v1/user';
-
-// const v1 = Router();
-
-// const user = new UserApi();
-// const product = new ProductApi();
-
-// v1.use('/user', user.router);
-// v1.use('/product', product.router);
-
-// export { v1 };

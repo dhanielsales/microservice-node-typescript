@@ -15,8 +15,6 @@ export function exceptionsHandler(
     });
   }
 
-  // console.error(err);
-
   new AppLogger({
     date: new Date(),
     message: `Error on route ${request.path}`,

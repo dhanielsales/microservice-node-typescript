@@ -1,4 +1,4 @@
-import { EnsureAuthenticated } from '@api/middlewares/ensureAuthenticated2';
+import { EnsureAuthenticated } from '@api/middlewares/decorators/ensureAuthenticated';
 import { UserRepository } from '@app/v1/user';
 import { Router, Request, Response } from 'express';
 
@@ -20,32 +20,40 @@ export class UserApi {
     return response.json(data);
   }
 
-  // @EnsureAuthenticated()
+  @EnsureAuthenticated()
   async show(request: Request, response: Response): Promise<any> {
     const { id } = request.params;
     const repository = new UserRepository();
     const data = await repository.getUser(id);
 
-    // TODO: transferir validação para dentro do repository ?
-
-    return response.status(data ? 200 : 404).json(data);
+    return response.status(200).json(data);
   }
 
   async create(request: Request, response: Response): Promise<any> {
     const { id } = request.params;
+    // TODO: validate request body
+
     const repository = new UserRepository();
     const data = await repository.getUser(id);
-
-    // TODO: transferir validação para dentro do repository ?
 
     return response.status(200).json(data);
   }
 
-  async update(_: Request, response: Response): Promise<any> {
-    return response.status(404).end();
+  async update(request: Request, response: Response): Promise<any> {
+    const { id } = request.params;
+    // TODO: validate request body
+
+    const repository = new UserRepository();
+    const data = await repository.getUser(id);
+
+    return response.status(200).json(data);
   }
 
-  async delete(_: Request, response: Response): Promise<any> {
-    return response.status(404).end();
+  async delete(request: Request, response: Response): Promise<any> {
+    const { id } = request.params;
+    const repository = new UserRepository();
+    await repository.removeUser(id);
+
+    return response.status(200).end();
   }
 }

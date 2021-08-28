@@ -21,8 +21,6 @@ export class PreferenceApi {
     const repository = new PreferenceRepository();
     const data = await repository.getPreference(id);
 
-    // TODO: transferir validação para dentro do repository ?
-
-    return response.status(data ? 200 : 404).json(data);
+    return response.status(200).json(data);
   }
 }
