@@ -1,25 +1,51 @@
+import { EnsureAuthenticated } from '@api/middlewares/ensureAuthenticated2';
 import { UserRepository } from '@app/v1/user';
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 
-const userRoute = Router();
+export class UserApi {
+  router: Router = Router();
 
-/******************** INDEX ********************/
-userRoute.get('/', async (request, response) => {
-  const repository = new UserRepository();
-  const data = await repository.getUsers();
+  constructor() {
+    this.router.get('/', this.index);
+    this.router.get('/:id', this.show);
+    this.router.post('/', this.create);
+    this.router.put('/:id', this.update);
+    this.router.delete('/:id', this.delete);
+  }
 
-  return response.json(data);
-});
+  async index(_: Request, response: Response): Promise<any> {
+    const repository = new UserRepository();
+    const data = await repository.getUsers();
 
-/******************** SHOW ********************/
-userRoute.get('/:id', async (request, response) => {
-  const { id } = request.params;
-  const repository = new UserRepository();
-  const data = await repository.getUser(id);
+    return response.json(data);
+  }
 
-  // TODO: transferir validação para dentro do repository ?
+  // @EnsureAuthenticated()
+  async show(request: Request, response: Response): Promise<any> {
+    const { id } = request.params;
+    const repository = new UserRepository();
+    const data = await repository.getUser(id);
 
-  return response.status(data ? 200 : 404).json(data);
-});
+    // TODO: transferir validação para dentro do repository ?
 
-export default userRoute;
+    return response.status(data ? 200 : 404).json(data);
+  }
+
+  async create(request: Request, response: Response): Promise<any> {
+    const { id } = request.params;
+    const repository = new UserRepository();
+    const data = await repository.getUser(id);
+
+    // TODO: transferir validação para dentro do repository ?
+
+    return response.status(200).json(data);
+  }
+
+  async update(_: Request, response: Response): Promise<any> {
+    return response.status(404).end();
+  }
+
+  async delete(_: Request, response: Response): Promise<any> {
+    return response.status(404).end();
+  }
+}

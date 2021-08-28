@@ -1,17 +1,6 @@
 import { SqlConnection } from '@model/sql';
 import { User } from '@model/user';
 
-const usersMock: User[] = [
-  {
-    id: '1',
-    name: 'jose',
-  },
-  {
-    id: '2',
-    name: 'joao',
-  },
-];
-
 export class UserStore {
   private readonly connection: SqlConnection;
 
@@ -19,19 +8,33 @@ export class UserStore {
     this.connection = connection;
   }
 
-  public async getUsers(): Promise<User[]> {
-    const users = usersMock;
+  public async getAll(): Promise<User[]> {
+    const users = await this.connection.select('*').from('users');
 
     return users;
   }
 
-  public async getUser(id: string): Promise<User | null> {
-    const user = usersMock.filter(user => user.id === id)[0];
+  public async getOne(id: string): Promise<User | null> {
+    const user = await this.connection.select('*').from('users').where({ id }).limit(1);
 
     if (user) {
-      return user;
+      return user[0];
     }
 
     return null;
+  }
+
+  public async insertOne(user: User): Promise<User> {
+    const [id] = await this.connection.insert(user).into('users');
+    const newUser = await this.connection.select('*').from('users').where({ id }).limit(1);
+
+    return newUser[0];
+  }
+
+  public async insertMany(users: User[]): Promise<User[]> {
+    const ids = await this.connection.insert(users).into('users');
+    const newUsers = await this.connection.select('*').from('users').whereIn('id', ids);
+
+    return newUsers;
   }
 }

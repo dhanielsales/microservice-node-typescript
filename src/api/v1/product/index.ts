@@ -1,25 +1,29 @@
-import { ProductsRepository } from '@app/v0/product';
-import { Router } from 'express';
+import { ProductsRepository } from '@app/v1/product';
 
-const productRoute = Router();
+import { Router, Request, Response } from 'express';
 
-/******************** INDEX ********************/
-productRoute.get('/', async (request, response) => {
-  const repository = new ProductsRepository();
-  const data = await repository.getProducts();
+export class ProductApi {
+  router: Router = Router();
 
-  return response.json(data);
-});
+  constructor() {
+    this.router.get('/', this.index);
+    this.router.get('/:id', this.show);
+  }
 
-/******************** SHOW ********************/
-productRoute.get('/:id', async (request, response) => {
-  const { id } = request.params;
-  const repository = new ProductsRepository();
-  const data = await repository.getProduct(id);
+  async index(_: Request, response: Response): Promise<any> {
+    const repository = new ProductsRepository();
+    const data = await repository.getProducts();
 
-  // TODO: transferir validação para dentro do repository ?
+    return response.json(data);
+  }
 
-  return response.status(data ? 200 : 404).json(data);
-});
+  async show(request: Request, response: Response): Promise<any> {
+    const { id } = request.params;
+    const repository = new ProductsRepository();
+    const data = await repository.getProduct(id);
 
-export default productRoute;
+    // TODO: transferir validação para dentro do repository ?
+
+    return response.status(data ? 200 : 404).json(data);
+  }
+}

@@ -1,22 +1,17 @@
 import { Router } from 'express';
 import { exceptionsHandler } from './middlewares/exceptionsHandler';
 
-import { v0 } from './v0';
-import { v1 } from './v1';
-import { health } from './health';
-
-export interface Versions {
-  [key: string]: Router;
-}
+import { V0 } from '@api/v0';
+import { V1 } from '@api/v1';
+import { health } from '@api/health';
 
 export class Api {
-  private versions: Versions;
-  private api: Router;
+  private router: Router = Router();
+  private health: Router;
+  private v1: V1;
+  private v0: V0 = new V0();
 
   constructor() {
-    // Cria o router principal
-    this.api = Router();
-
     // Instancia todas as versões da API
     this.instanceVersions();
 
@@ -28,26 +23,27 @@ export class Api {
   }
 
   public init(): Router {
-    return this.api;
+    return this.router;
   }
 
   private instanceVersions() {
+    // Cria instancia de todas as versões da API
+    this.v1 = new V1();
+    // this.v0 = new V0();
+    this.health = health;
+
     // TODO: Verificar o env por quais versões de API devem subir
-    this.versions = {
-      health,
-      v0,
-      v1,
-    };
   }
 
   private instanceRoutes() {
-    for (var [key, value] of Object.entries(this.versions)) {
-      this.api.use(`/${key}`, value);
-    }
+    this.router.use('/health', this.health);
+    this.router.use('/v0', this.v0.router);
+    this.router.use('/v1', this.v1.router);
   }
 
   private applyMiddlewares() {
     // Middleware principal de Exceptions
-    this.api.use(exceptionsHandler);
+    // TODO: Aplicar Cors middleware
+    this.router.use(exceptionsHandler);
   }
 }

@@ -1,30 +1,40 @@
 import { Product } from '@model/product';
-
-const productsMock: Product[] = [
-  {
-    id: '1',
-    name: 'pão',
-  },
-  {
-    id: '2',
-    name: 'leite',
-  },
-];
+import { app } from '@app/app';
 
 export class ProductsRepository {
   public async getProducts(): Promise<Product[]> {
-    const products = productsMock;
+    const { ProductStore } = app.store.Sql();
+
+    const products = await ProductStore.getAll();
 
     return products;
   }
 
   public async getProduct(id: string): Promise<Product | null> {
-    const product = productsMock.filter(product => product.id === id)[0];
+    const { ProductStore } = app.store.Sql();
+
+    const product = await ProductStore.getOne(id);
 
     if (product) {
       return product;
     }
 
     return null;
+  }
+
+  public async setProduct(product: Product): Promise<Product> {
+    const { ProductStore } = app.store.Sql();
+
+    const newProduct = await ProductStore.insertOne(product);
+
+    return newProduct;
+  }
+
+  public async setProducts(product: Product[]): Promise<Product[]> {
+    const { ProductStore } = app.store.Sql();
+
+    const newProducts = await ProductStore.insertMany(product);
+
+    return newProducts;
   }
 }

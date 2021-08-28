@@ -1,11 +1,19 @@
 import { Router } from 'express';
 
-import product from './product';
-import user from './user';
+import { ProductApi } from '@api/v0/product';
+import { UserApi } from '@api/v0/user';
 
-const v0 = Router();
+export class V0 {
+  public readonly router: Router = Router();
+  public readonly userApi: UserApi;
+  public readonly productApi: ProductApi;
 
-v0.use('/user', user);
-v0.use('/product', product);
+  constructor() {
+    // Cria instancia de todas as apis V0
+    this.userApi = new UserApi();
+    this.productApi = new ProductApi();
 
-export { v0 };
+    this.router.use('user', this.userApi.router);
+    this.router.use('product/', this.productApi.router);
+  }
+}

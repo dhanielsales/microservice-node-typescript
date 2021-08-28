@@ -1,25 +1,28 @@
 import { PreferenceRepository } from '@app/v1/preference';
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 
-const preferenceRoute = Router();
+export class PreferenceApi {
+  router: Router = Router();
 
-/******************** INDEX ********************/
-preferenceRoute.get('/', async (request, response) => {
-  const repository = new PreferenceRepository();
-  const data = await repository.getPreferences();
+  constructor() {
+    this.router.get('/', this.index);
+    this.router.get('/:id', this.show);
+  }
 
-  return response.json(data);
-});
+  async index(_: Request, response: Response): Promise<any> {
+    const repository = new PreferenceRepository();
+    const data = await repository.getPreferences();
 
-/******************** SHOW ********************/
-preferenceRoute.get('/:id', async (request, response) => {
-  const { id } = request.params;
-  const repository = new PreferenceRepository();
-  const data = await repository.getPreference(id);
+    return response.json(data);
+  }
 
-  // TODO: transferir validação para dentro do repository ?
+  async show(request: Request, response: Response): Promise<any> {
+    const { id } = request.params;
+    const repository = new PreferenceRepository();
+    const data = await repository.getPreference(id);
 
-  return response.status(data ? 200 : 404).json(data);
-});
+    // TODO: transferir validação para dentro do repository ?
 
-export default preferenceRoute;
+    return response.status(data ? 200 : 404).json(data);
+  }
+}

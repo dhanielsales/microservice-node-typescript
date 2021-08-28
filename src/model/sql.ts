@@ -5,7 +5,7 @@ import { Knex } from 'knex';
 export type SqlConnection = Knex<any, unknown[]>;
 
 export interface Sql {
-  connection: SqlConnection;
-  product: ProductStore;
-  user: UserStore;
+  Connection: SqlConnection;
+  ProductStore: ProductStore;
+  UserStore: UserStore;
 }

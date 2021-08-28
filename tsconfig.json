@@ -23,7 +23,7 @@
       "@app/*": ["app/*"],
       "@model/*": ["model/*"],
       "@store/*": ["store/*"],
-      "@external/*": ["external/*"],
+      "@comms/*": ["comms/*"],
       "@shared/*": ["shared/*"]
     }
   },
