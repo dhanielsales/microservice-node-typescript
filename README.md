@@ -8,6 +8,10 @@ docker run --name mongodb-test -e "MONGO_INITDB_ROOT_USERNAME=user" -e "MONGO_IN
 
 ```
 
+```
+db-migrate create products --sql-file
+```
+
 ## Schemas
 
 ```
