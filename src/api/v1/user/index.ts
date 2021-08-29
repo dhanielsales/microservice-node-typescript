@@ -1,5 +1,6 @@
 import { EnsureAuthenticated } from '@api/middlewares/decorators/ensureAuthenticated';
 import { UserRepository } from '@app/v1/user';
+import { validateUserCreate, validateUserUpdate } from '@model/user';
 import { Router, Request, Response } from 'express';
 
 export class UserApi {
@@ -30,21 +31,22 @@ export class UserApi {
   }
 
   async create(request: Request, response: Response): Promise<any> {
-    const { id } = request.params;
-    // TODO: validate request body
+    const payload = request.body;
+    const user = await validateUserCreate(payload);
 
     const repository = new UserRepository();
-    const data = await repository.getUser(id);
+    const data = await repository.addUser(user);
 
     return response.status(200).json(data);
   }
 
   async update(request: Request, response: Response): Promise<any> {
     const { id } = request.params;
-    // TODO: validate request body
+    const payload = request.body;
+    const user = await validateUserUpdate(payload);
 
     const repository = new UserRepository();
-    const data = await repository.getUser(id);
+    const data = await repository.updateUser(user, id);
 
     return response.status(200).json(data);
   }

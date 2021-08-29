@@ -12,12 +12,13 @@ export function exceptionsHandler(
     return response.status(err.statusCode).json({
       status: 'error',
       message: err.message,
+      details: err.details && err.details,
     });
   }
 
   new AppLogger({
     date: new Date(),
-    message: `Error on route ${request.path}`,
+    message: `Error on route ${request.method} ${request.path} `,
     type: 'ERROR',
     error: err,
   });
