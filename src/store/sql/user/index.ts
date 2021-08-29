@@ -17,25 +17,20 @@ export class UserStore {
   public async getOne(id: string): Promise<User | null> {
     const user = await this.connection.select('*').from('users').where({ id }).limit(1);
 
-    if (user) {
-      return user[0];
-    }
-
-    return null;
+    return user ? user[0] : null;
   }
 
   public async insertOne(user: User): Promise<User> {
-    const [id] = await this.connection.insert(user).into('users');
-    const newUser = await this.connection.select('*').from('users').where({ id }).limit(1);
+    await this.connection.insert(user).into('users');
+    const newUser = await this.connection.select('*').from('users').where({ id: user.id }).limit(1);
 
     return newUser[0];
   }
 
-  public async insertMany(users: User[]): Promise<User[]> {
-    const ids = await this.connection.insert(users).into('users');
-    const newUsers = await this.connection.select('*').from('users').whereIn('id', ids);
+  public async updateOne(user: User, id: string): Promise<number | null> {
+    const updatedUser = await this.connection('users').update(user).where({ id });
 
-    return newUsers;
+    return updatedUser || null;
   }
 
   public async removeOne(id: string): Promise<number | null> {
