@@ -1,7 +1,9 @@
+import { uuid } from 'uuidv4';
+
 import { User } from '@model/user';
 import { app } from '@app/app';
-import AppError from '@shared/errors/AppError';
 
+import AppError from '@shared/errors/AppError';
 export class UserRepository {
   public async getUsers(): Promise<User[]> {
     const { UserStore } = app.store.Sql();
@@ -21,19 +23,31 @@ export class UserRepository {
     return user;
   }
 
-  public async setUser(user: User): Promise<User> {
-    const { UserStore } = app.store.Sql();
+  public async addUser(user: User): Promise<User> {
+    const id = uuid();
+    user.id = id;
 
+    const { UserStore } = app.store.Sql();
     const newUser = await UserStore.insertOne(user);
 
     return newUser;
   }
 
-  public async setUsers(user: User[]): Promise<User[]> {
+  public async updateUser(user: User, id: string): Promise<void> {
     const { UserStore } = app.store.Sql();
+    const updatedUser = await UserStore.updateOne(user, id);
 
-    const newUsers = await UserStore.insertMany(user);
+    if (!updatedUser) {
+      throw new AppError('Not found', 404);
+    }
+  }
 
-    return newUsers;
+  public async removeUser(id: string): Promise<void> {
+    const { UserStore } = app.store.Sql();
+    const user = await UserStore.removeOne(id);
+
+    if (!user) {
+      throw new AppError('Not found', 404);
+    }
   }
 }

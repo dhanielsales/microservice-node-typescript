@@ -1,5 +1,6 @@
 import { Product } from '@model/product';
 import { app } from '@app/app';
+import AppError from '@shared/errors/AppError';
 
 export class ProductsRepository {
   public async getProducts(): Promise<Product[]> {
@@ -15,11 +16,11 @@ export class ProductsRepository {
 
     const product = await ProductStore.getOne(id);
 
-    if (product) {
-      return product;
+    if (!product) {
+      throw new AppError('Not found.', 404);
     }
 
-    return null;
+    return product;
   }
 
   public async setProduct(product: Product): Promise<Product> {
