@@ -7,6 +7,7 @@ import { Api } from '@api/api';
 import { AppConfig } from '@model/app';
 
 import { initServer } from '@shared/infra/server/server';
+import { Cache } from '@shared/infra/agregators/cache';
 
 (async () => {
   // Criando instancia de conecções com o banco de dados
@@ -18,11 +19,15 @@ import { initServer } from '@shared/infra/server/server';
   // Criando instancia de comunicações
   const api = new Api();
 
+  // Criando instancia de comunicações
+  const cache = new Cache();
+
   // Criando configurações para o App
   const appConfig: AppConfig = {
     api,
     store,
     comms,
+    cache,
   };
 
   // Instancia o novo App

@@ -5,6 +5,10 @@
 ```
 docker run --name postgres-test -e "POSTGRES_USER=user" -e "POSTGRES_PASSWORD=password" -e "POSTGRES_DB=main" -d -p 5432:5432 postgres
 docker run --name mongodb-test -e "MONGO_INITDB_ROOT_USERNAME=user" -e "MONGO_INITDB_ROOT_PASSWORD=password" -e "MONGO_INITDB_DATABASE=main" -d -p 27017:27017 mongo
+docker run --name redis-test -d -p 6379:6379 redis:alpine --requirepass "password"
+
+docker run --name redis -d -p 6379:6379 redis redis-server --requirepass "SUPER_SECRET_PASSWORD"
+
 
 ```
 

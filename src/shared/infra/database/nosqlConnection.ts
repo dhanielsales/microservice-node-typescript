@@ -1,4 +1,4 @@
-import dbConfig from '@shared/config/db.config';
+import dbConfig from '@shared/config/sql.config';
 import { SqlConnection } from '@model/sql';
 import knex from 'knex';
 
