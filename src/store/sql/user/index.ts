@@ -2,11 +2,19 @@ import { SqlConnection } from '@model/sql';
 import { User } from '@model/user';
 
 export class UserStore {
+  private static instance: UserStore;
+
   private readonly connection: SqlConnection;
 
-  constructor(connection: SqlConnection) {
-    this.connection = connection;
+  private constructor() { }
+
+  static getInstance(): UserStore {
+    if (!UserStore.instance) {
+      UserStore.instance = new UserStore()
+    }
+    return UserStore.instance
   }
+
 
   public async getAll(): Promise<User[]> {
     const users = await this.connection.select('*').from('users');

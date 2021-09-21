@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/infra/agregators/AppError';
 
 export function Model(err: Error, request: Request, response: Response, next: NextFunction) {
   // Validate your middleware HERE

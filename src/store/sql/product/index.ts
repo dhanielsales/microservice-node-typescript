@@ -2,10 +2,16 @@ import { Product } from '@model/product';
 import { SqlConnection } from '@model/sql';
 
 export class ProductStore {
+  private static instance: ProductStore;
   private readonly connection: SqlConnection;
 
-  constructor(connection: SqlConnection) {
-    this.connection = connection;
+  private constructor() { }
+
+  static getInstance(): ProductStore {
+    if (!ProductStore.instance) {
+      ProductStore.instance = new ProductStore()
+    }
+    return ProductStore.instance
   }
 
   public async getAll(): Promise<Product[]> {

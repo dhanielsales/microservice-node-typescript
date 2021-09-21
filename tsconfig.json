@@ -24,7 +24,8 @@
       "@model/*": ["model/*"],
       "@store/*": ["store/*"],
       "@comms/*": ["comms/*"],
-      "@shared/*": ["shared/*"]
+      "@shared/*": ["shared/*"],
+      "@service/*": ["service/*"]
     }
   },
   "include": ["src", "__tests__"]

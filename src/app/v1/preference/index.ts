@@ -1,19 +1,16 @@
 import { Preference } from '@model/preference';
 
-const preferenceMock: Preference[] = [
-  {
-    id: '1',
-    autoPrint: false,
-    theme: 'dark',
-  },
-  {
-    id: '2',
-    autoPrint: false,
-    theme: 'light',
-  },
-];
-
 export class PreferenceRepository {
+  private static instance: PreferenceRepository;
+  private constructor() { }
+
+  static getInstance(): PreferenceRepository {
+    if (!PreferenceRepository.instance) {
+        PreferenceRepository.instance = new PreferenceRepository();
+    }
+    return PreferenceRepository.instance;
+  }
+
   public async getPreferences(): Promise<Preference[]> {
     const preference = preferenceMock;
 

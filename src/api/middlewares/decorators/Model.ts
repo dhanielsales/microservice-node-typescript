@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from 'express';
-import AppError from '@shared/errors/AppError';
+import { Request, Response } from 'express';
+import AppError from '@shared/infra/agregators/AppError';
 
 import { Decorator } from '@model/utils';
 

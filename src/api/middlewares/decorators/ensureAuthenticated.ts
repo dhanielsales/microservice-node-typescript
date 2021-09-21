@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 
 import authConfig from '@shared/config/auth.config';
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/infra/agregators/AppError';
 
 import { Decorator } from '@model/utils';
 
@@ -12,7 +12,7 @@ interface TokenPayload {
   sub: string;
 }
 
-// TODO: Incluir validação com ACL Roles e Permissions
+// TODO: Incluir validação com ACL Roles e Permissions? Outro Decorator?
 export function EnsureAuthenticated(): Decorator {
   return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value;

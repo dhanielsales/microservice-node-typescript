@@ -1,10 +1,22 @@
+import AppError from '@shared/infra/agregators/AppError';
 import { Product } from '@model/product';
-import { app } from '@app/app';
-import AppError from '@shared/errors/AppError';
+
+import { Service } from '@service/index';
 
 export class ProductsRepository {
+  private static instance: ProductsRepository;
+  private constructor() { }
+
+  static getInstance(): ProductsRepository {
+    if (!ProductsRepository.instance) {
+        ProductsRepository.instance = new ProductsRepository();
+    }
+    return ProductsRepository.instance;
+  }
+
   public async getProducts(): Promise<Product[]> {
-    const { ProductStore } = app.store.Sql();
+    const { store } = Service.getInstance();
+    const { ProductStore } = store.sql
 
     const products = await ProductStore.getAll();
 
@@ -12,7 +24,8 @@ export class ProductsRepository {
   }
 
   public async getProduct(id: string): Promise<Product | null> {
-    const { ProductStore } = app.store.Sql();
+    const { store } = Service.getInstance();
+    const { ProductStore } = store.sql
 
     const product = await ProductStore.getOne(id);
 
@@ -24,7 +37,8 @@ export class ProductsRepository {
   }
 
   public async setProduct(product: Product): Promise<Product> {
-    const { ProductStore } = app.store.Sql();
+    const { store } = Service.getInstance();
+    const { ProductStore } = store.sql
 
     const newProduct = await ProductStore.insertOne(product);
 
@@ -32,7 +46,8 @@ export class ProductsRepository {
   }
 
   public async setProducts(product: Product[]): Promise<Product[]> {
-    const { ProductStore } = app.store.Sql();
+    const { store } = Service.getInstance();
+    const { ProductStore } = store.sql
 
     const newProducts = await ProductStore.insertMany(product);
 

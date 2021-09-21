@@ -1,22 +1,20 @@
-import { Sql } from '@model/sql';
-import { getSqlConnector } from '@shared/infra/database/sqlConnection';
-
-import { UserStore } from '@store/sql/user';
-import { ProductStore } from '@store/sql/product';
+import { Sql } from '@store/sql';
+import { NoSql } from '@store/nosql';
 
 export class Store {
-  private readonly sql: Sql;
+  private static instance: Store;
+  public readonly sql: Sql;
+  public readonly noSql: NoSql;
 
-  constructor() {
-    const connection = getSqlConnector();
-    this.sql = {
-      Connection: connection,
-      UserStore: new UserStore(connection),
-      ProductStore: new ProductStore(connection),
-    };
+  private constructor() {
+    this.sql = Sql.getInstance()
+    this.noSql = NoSql.getInstance()
   }
-
-  Sql() {
-    return this.sql;
+  
+  static getInstance(): Store {
+    if (!Store.instance) {
+      Store.instance = new Store()
+    }
+    return Store.instance
   }
 }

@@ -1,4 +1,4 @@
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/infra/agregators/AppError';
 import * as yup from 'yup';
 
 export interface User {

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/infra/agregators/AppError';
 import AppLogger from '@shared/infra/agregators/AppLogger';
 
 export function exceptionsHandler(

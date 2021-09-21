@@ -1,22 +1,23 @@
 import { Router } from 'express';
-import { sub } from 'date-fns';
 
-const health = Router();
+import { Check } from '@api/health/check';
 
-health.get('/', async (request, response) => {
-  const statusCode = 200; // 500
+export class Health {
+  private static instance: Health;
+  public readonly router: Router;
+  public readonly check: Check;
 
-  const uptime = sub(new Date(), {
-    seconds: process.uptime(),
-  }).getTime();
+  private constructor() {
+    this.router = Router();
+    this.check = Check.getInstance();
+    
+    this.router.use('/check', this.check.router);
+  }
 
-  const healthcheck = {
-    start: uptime,
-    now: new Date().getTime(),
-    message: 'available', // unavailable
-  };
-
-  return response.status(statusCode).json(healthcheck);
-});
-
-export { health };
+  static getInstance(): Health {
+    if (!Health.instance) {
+      Health.instance = new Health();
+    }
+    return Health.instance;
+  }
+}
