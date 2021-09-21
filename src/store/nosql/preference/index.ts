@@ -25,6 +25,12 @@ export class PreferenceStore {
     return PreferenceStore.instance
   }
 
+  public async getOne(id: string): Promise<Preference> {
+    const preference = preferenceMock.filter(preference => preference.id === id)[0];
+
+    return preference;
+  }
+
   public async getAll(): Promise<Preference[]> {
     const preferences = preferenceMock
 

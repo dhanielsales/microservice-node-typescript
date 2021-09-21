@@ -2,6 +2,7 @@ import AppError from '@shared/infra/agregators/AppError';
 import { Product } from '@model/product';
 
 import { Service } from '@service/index';
+import { v4 } from 'uuid';
 
 export class ProductsRepository {
   private static instance: ProductsRepository;
@@ -16,41 +17,32 @@ export class ProductsRepository {
 
   public async getProducts(): Promise<Product[]> {
     const { store } = Service.getInstance();
-    const { ProductStore } = store.sql
+    const { product } = store.sql
+    const results = await product.getAll();
 
-    const products = await ProductStore.getAll();
-
-    return products;
+    return results;
   }
 
   public async getProduct(id: string): Promise<Product | null> {
     const { store } = Service.getInstance();
-    const { ProductStore } = store.sql
+    const { product } = store.sql
+    const result = await product.getOne(id);
 
-    const product = await ProductStore.getOne(id);
-
-    if (!product) {
+    if (!result) {
       throw new AppError('Not found.', 404);
     }
 
-    return product;
+    return result;
   }
 
-  public async setProduct(product: Product): Promise<Product> {
+  public async addProduct(newProduct: Product): Promise<Product> {
+    const id = v4();
+    newProduct.id = id;
+
     const { store } = Service.getInstance();
-    const { ProductStore } = store.sql
+    const { product } = store.sql
+    const result = await product.insertOne(newProduct);
 
-    const newProduct = await ProductStore.insertOne(product);
-
-    return newProduct;
-  }
-
-  public async setProducts(product: Product[]): Promise<Product[]> {
-    const { store } = Service.getInstance();
-    const { ProductStore } = store.sql
-
-    const newProducts = await ProductStore.insertMany(product);
-
-    return newProducts;
+    return result;
   }
 }

@@ -1,5 +1,6 @@
 import { User } from '@model/user';
 import { Service } from '@service/index';
+import AppError from '@shared/infra/agregators/AppError';
 
 export class UserRepository {
   private static instance: UserRepository;
@@ -14,22 +15,22 @@ export class UserRepository {
   }
 
   public async getUsers(): Promise<User[]> {
-    const store = Service.getInstance().getStore()
-    const { UserStore } = store.Sql();
-    const users = await UserStore.getAll();
+    const { store } = Service.getInstance()
+    const { user } = store.sql
+    const result = await user.getAll();
 
-    return users;
+    return result;
   }
 
   public async getUser(id: string): Promise<User | null> {
-    const store = Service.getInstance().getStore()
-    const { UserStore } = store.Sql();
-    const user = await UserStore.getOne(id);
+    const { store } = Service.getInstance()
+    const { user } = store.sql
+    const result = await user.getOne(id);
 
-    if (user) {
-      return user;
+    if (!result) {
+      throw new AppError('Not found.', 404);
     }
 
-    return null;
+    return result;
   }
 }

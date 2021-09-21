@@ -1,4 +1,5 @@
 import { Preference } from '@model/preference';
+import { Service } from '@service/index'
 
 export class PreferenceRepository {
   private static instance: PreferenceRepository;
@@ -12,16 +13,20 @@ export class PreferenceRepository {
   }
 
   public async getPreferences(): Promise<Preference[]> {
-    const preference = preferenceMock;
+    const { store } = Service.getInstance()
+    const { preference } = store.noSql
+    const result = await preference.getAll();
 
-    return preference;
+    return result;
   }
 
   public async getPreference(id: string): Promise<Preference | null> {
-    const preference = preferenceMock.filter(preference => preference.id === id)[0];
+    const { store } = Service.getInstance()
+    const { preference } = store.noSql
+    const result = await preference.getOne(id);
 
-    if (preference) {
-      return preference;
+    if (result) {
+      return result;
     }
 
     return null;

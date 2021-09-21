@@ -1,9 +1,10 @@
 import { Product } from '@model/product';
 import { SqlConnection } from '@model/sql';
+import { getSqlConnector } from '@shared/infra/database/sqlConnection';
 
 export class ProductStore {
   private static instance: ProductStore;
-  private readonly connection: SqlConnection;
+  private readonly connection: SqlConnection = getSqlConnector();
 
   private constructor() { }
 
@@ -31,8 +32,8 @@ export class ProductStore {
   }
 
   public async insertOne(product: Product): Promise<Product> {
-    const [id] = await this.connection.insert(product).into('product');
-    const newProduct = await this.connection.select('*').from('product').where({ id }).limit(1);
+    await this.connection.insert(product).into('products');
+    const newProduct = await this.connection.select('*').from('products').where({ id: product.id }).limit(1);
 
     return newProduct[0];
   }

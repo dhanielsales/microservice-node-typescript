@@ -1,10 +1,10 @@
 import { SqlConnection } from '@model/sql';
 import { User } from '@model/user';
+import { getSqlConnector } from '@shared/infra/database/sqlConnection';
 
 export class UserStore {
   private static instance: UserStore;
-
-  private readonly connection: SqlConnection;
+  private readonly connection: SqlConnection = getSqlConnector();
 
   private constructor() { }
 
@@ -14,7 +14,6 @@ export class UserStore {
     }
     return UserStore.instance
   }
-
 
   public async getAll(): Promise<User[]> {
     const users = await this.connection.select('*').from('users');
@@ -35,15 +34,15 @@ export class UserStore {
     return newUser[0];
   }
 
-  public async updateOne(user: User, id: string): Promise<number | null> {
-    const updatedUser = await this.connection('users').update(user).where({ id });
-
-    return updatedUser || null;
+  public async updateOne(user: User, id: string): Promise<User | null> {
+    await this.connection('users').update(user).where({ id });
+    const updatedUser = await this.connection.select('*').from('users').where({ id }).limit(1);
+    return updatedUser[0]
   }
 
   public async removeOne(id: string): Promise<number | null> {
+    // TODO Implementar deleted_at ao inves de remoção, após construção de estrutura de migrations
     const user = await this.connection.delete().from('users').where({ id });
-
     return user;
   }
 }

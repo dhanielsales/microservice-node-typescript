@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4';
+import { v4 } from 'uuid';
 
 import AppError from '@shared/infra/agregators/AppError';
 
@@ -17,52 +17,54 @@ export class UserRepository {
   }
 
   public async getUsers(): Promise<User[]> {
-    const store = Service.getInstance().getStore()
-    const { UserStore } = store.Sql()
-    const users = await UserStore.getAll();
+    const { store } = Service.getInstance()
+    const { user } = store.sql
+    const results = await user.getAll();
 
-    return users;
+    return results;
   }
 
   public async getUser(id: string): Promise<User> {
-    const store = Service.getInstance().getStore()
-    const { UserStore } = store.Sql()
-    const user = await UserStore.getOne(id);
+    const { store } = Service.getInstance()
+    const { user } = store.sql
+    const result = await user.getOne(id);
 
-    if (!user) {
+    if (!result) {
       throw new AppError('Not found', 404);
     }
 
-    return user;
+    return result;
   }
 
-  public async addUser(user: User): Promise<User> {
-    const id = uuid();
-    user.id = id;
+  public async addUser(newUser: User): Promise<User> {
+    const id = v4();
+    newUser.id = id;
 
-    const store = Service.getInstance().getStore()
-    const { UserStore } = store.Sql()
-    const newUser = await UserStore.insertOne(user);
+    const { store } = Service.getInstance()
+    const { user } = store.sql
+    const result = await user.insertOne(newUser);
 
-    return newUser;
+    return result;
   }
 
-  public async updateUser(user: User, id: string): Promise<void> {
-    const store = Service.getInstance().getStore()
-    const { UserStore } = store.Sql()
-    const updatedUser = await UserStore.updateOne(user, id);
+  public async updateUser(updateUser: User, id: string): Promise<User> {
+    const { store } = Service.getInstance()
+    const { user } = store.sql
+    const result = await user.updateOne(updateUser, id);
 
-    if (!updatedUser) {
+    if (!result) {
       throw new AppError('Not found', 404);
     }
+
+    return result
   }
 
   public async removeUser(id: string): Promise<void> {
-    const store = Service.getInstance().getStore()
-    const { UserStore } = store.Sql()
-    const user = await UserStore.removeOne(id);
+    const { store } = Service.getInstance()
+    const { user } = store.sql
+    const result = await user.removeOne(id);
 
-    if (!user) {
+    if (!result) {
       throw new AppError('Not found', 404);
     }
   }

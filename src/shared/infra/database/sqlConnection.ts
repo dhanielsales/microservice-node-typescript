@@ -5,6 +5,7 @@ import AppLogger from '@shared/infra/agregators/AppLogger';
 
 let connection: SqlConnection;
 
+// TODO adicionar validação de conecção com o banco
 export function getSqlConnector(): SqlConnection {
   if (connection) return connection
   if (!dbConfig) {

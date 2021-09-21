@@ -59,7 +59,7 @@ export class Api {
     server.use(express.json());
 
     // Extrai instancia da Api do App
-    const api = service.getApi();
+    const { api } = service;
 
     // Adiciona todas as rotas ao App
     server.use(api.router);
