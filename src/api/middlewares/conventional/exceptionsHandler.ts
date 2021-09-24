@@ -1,13 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
 import AppError from '@shared/infra/agregators/AppError';
 import AppLogger from '@shared/infra/agregators/AppLogger';
+import { Middleware } from '@model/api';
 
-export function exceptionsHandler(
-  err: Error,
-  request: Request,
-  response: Response,
-  next: NextFunction,
-): Response {
+export const exceptionsHandler: Middleware = (err, request, response) => {
   if (err instanceof AppError) {
     return response.status(err.statusCode).json({
       status: 'error',
@@ -17,7 +12,6 @@ export function exceptionsHandler(
   }
 
   new AppLogger({
-    date: new Date(),
     message: `Error on route ${request.method} ${request.path} `,
     type: 'ERROR',
     error: err,

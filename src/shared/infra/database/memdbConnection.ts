@@ -12,7 +12,6 @@ export async function getMemDbConnection(): Promise<Redis> {
 
   client.on('connection', () => {
     new AppLogger({
-      date: new Date(),
       message: 'Success when connected with Cache database.',
       type: 'INFO',
     });
@@ -20,7 +19,6 @@ export async function getMemDbConnection(): Promise<Redis> {
 
   client.on('error', err => {
     new AppLogger({
-      date: new Date(),
       message: 'Error in connection from cache.',
       type: 'ERROR',
       error: err,

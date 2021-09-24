@@ -1,24 +1,16 @@
 import { EnsureAuthenticated } from '@api/middlewares/decorators/ensureAuthenticated';
 import { UserRepository } from '@app/v0/user';
-import { Router, Request, Response } from 'express';
+import { ApiImpl, RequestMethod, Request, Response} from '@model/api';
 
-export class UserApi {
-  private static instance: UserApi;
-  public readonly router: Router = Router();
-
-  private constructor() {
-    this.router.get('/', this.index);
-    this.router.get('/:id', this.show);
+export class UserApi extends ApiImpl {
+  constructor() {
+    super()
+    
+    this.applyRoute(RequestMethod.GET, '/', this.index);
+    this.applyRoute(RequestMethod.GET, '/:id', this.show);
   }
 
-  static getInstance(): UserApi {
-    if (!UserApi.instance) {
-      UserApi.instance = new UserApi();
-    }
-    return UserApi.instance;
-  }
-
-  async index(_: Request, response: Response): Promise<any> {
+  async index(_: Request, response: Response) {
     const repository = UserRepository.getInstance();
     const data = await repository.getUsers();
 
@@ -26,7 +18,7 @@ export class UserApi {
   }
 
   @EnsureAuthenticated()
-  async show(request: Request, response: Response): Promise<any> {
+  async show(request: Request, response: Response) {
     const { id } = request.params;
     const repository = UserRepository.getInstance();
     const data = await repository.getUser(id);

@@ -1,23 +1,13 @@
-import { Router } from 'express';
-
 import { Check } from '@api/health/check';
+import { ApiImpl } from '@model/api';
 
-export class Health {
-  private static instance: Health;
-  public readonly router: Router;
+export class Health extends ApiImpl {
   public readonly check: Check;
 
-  private constructor() {
-    this.router = Router();
-    this.check = Check.getInstance();
+  constructor() {
+    super()
+    this.check = new Check();
     
-    this.router.use('/check', this.check.router);
-  }
-
-  static getInstance(): Health {
-    if (!Health.instance) {
-      Health.instance = new Health();
-    }
-    return Health.instance;
+    this.applyGroup('/check', this.check.getRouter())
   }
 }

@@ -1,32 +1,22 @@
-import { Router } from 'express';
-
 import { PreferenceApi } from '@api/v1/preference';
 import { ProductApi } from '@api/v1/product';
 import { UserApi } from '@api/v1/user';
+import { ApiImpl } from '@model/api';
 
-export class V1 {
-  private static instance: V1;
-  public readonly router: Router;
-  public readonly userApi: UserApi;
-  public readonly productApi: ProductApi;
-  public readonly preferenceApi: PreferenceApi;
+export class V1 extends ApiImpl {
+  public readonly user: UserApi;
+  public readonly product: ProductApi;
+  public readonly preference: PreferenceApi;
 
-  private constructor() {
+  constructor() {
+    super()
     // Cria instancia de todas as apis V1
-    this.router = Router();
-    this.userApi = UserApi.getInstance();
-    this.productApi = ProductApi.getInstance();
-    this.preferenceApi = PreferenceApi.getInstance();
+    this.user = new UserApi();
+    this.product = new ProductApi();
+    this.preference = new PreferenceApi();
 
-    this.router.use('/user', this.userApi.router);
-    this.router.use('/product', this.productApi.router);
-    this.router.use('/preference', this.preferenceApi.router);
-  }
-
-  static getInstance(): V1 {
-    if (!V1.instance) {
-      V1.instance = new V1();
-    }
-    return V1.instance;
+    this.applyGroup('/user', this.user.getRouter());
+    this.applyGroup('/product', this.product.getRouter());
+    this.applyGroup('/preference', this.preference.getRouter());
   }
 }

@@ -1,20 +1,12 @@
 import { PreferenceRepository } from '@app/v1/preference';
-import { Router, Request, Response } from 'express';
+import { ApiImpl, RequestMethod, Request, Response } from '@model/api';
 
-export class PreferenceApi {
-  private static instance: PreferenceApi;
-  router: Router = Router();
+export class PreferenceApi extends ApiImpl  {
+  constructor() {
+    super()
 
-  private constructor() {
-    this.router.get('/', this.index);
-    this.router.get('/:id', this.show);
-  }
-
-  static getInstance(): PreferenceApi {
-    if (!PreferenceApi.instance) {
-      PreferenceApi.instance = new PreferenceApi()
-    }
-    return PreferenceApi.instance
+    this.applyRoute(RequestMethod.GET, '/', this.index);
+    this.applyRoute(RequestMethod.GET, '/:id', this.show);
   }
 
   async index(_: Request, response: Response): Promise<any> {

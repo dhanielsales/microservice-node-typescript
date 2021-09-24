@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 type Type = 'INFO' | 'WARNING' | 'ERROR';
 
 interface AppLoggerConfig {
-  date: Date;
+  date?: Date;
   message: string;
   type: Type;
   error?: any;
@@ -21,7 +21,7 @@ export default class AppLogger {
   public readonly type: Type;
   public readonly message: string;
 
-  constructor({ date, message, type, error }: AppLoggerConfig) {
+  constructor({ date = new Date(), message, type, error }: AppLoggerConfig) {
     this.date = date;
     this.message = message;
     this.type = type;

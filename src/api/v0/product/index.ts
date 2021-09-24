@@ -1,30 +1,22 @@
 import { ProductsRepository } from '@app/v0/product';
-import { Router, Request, Response } from 'express';
+import { ApiImpl, RequestMethod, Request, Response } from '@model/api';
 
-export class ProductApi {
-  private static instance: ProductApi;
-  public readonly router: Router = Router();
+export class ProductApi extends ApiImpl {
+  constructor() {
+    super()
 
-  private constructor() {
-    this.router.get('/', this.index);
-    this.router.get('/:id', this.show);
+    this.applyRoute(RequestMethod.GET, '/', this.index);
+    this.applyRoute(RequestMethod.GET, '/:id', this.show);
   }
-
-  static getInstance(): ProductApi {
-    if (!ProductApi.instance) {
-      ProductApi.instance = new ProductApi();
-    }
-    return ProductApi.instance
-  }
-
-  async index(_: Request, response: Response): Promise<any> {
+  
+  async index(_: Request, response: Response) {
     const repository = ProductsRepository.getInstance();
     const data = await repository.getProducts();
 
     return response.json(data);
   }
 
-  async show(request: Request, response: Response): Promise<any> {
+  async show(request: Request, response: Response) {
     const { id } = request.params;
     const repository = ProductsRepository.getInstance();
     const data = await repository.getProduct(id);

@@ -11,7 +11,7 @@ export class Sql {
   public readonly user: UserStore;
 
   private constructor() {
-    this.connection = getSqlConnector()
+    this.connection = getSqlConnector() // TODO está acoplado, poderia ser com injeção de dependencias e inversão de dependencias.
     this.product = ProductStore.getInstance()
     this.user = UserStore.getInstance()
   }

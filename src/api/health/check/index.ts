@@ -1,23 +1,15 @@
 
-import { Router, Request, Response } from 'express';
 import { sub } from 'date-fns';
+import { ApiImpl, RequestMethod, Response, Request } from '@model/api';
 
-export class Check {
-  private static instance: Check;
-  public readonly router: Router = Router();
-
-  private constructor() {
-    this.router.get('/', this.index);
+export class Check extends ApiImpl {
+  constructor() {
+    super()
+    
+    this.applyRoute(RequestMethod.GET, '/', this.check);
   }
 
-  static getInstance(): Check {
-    if (!Check.instance) {
-      Check.instance = new Check();
-    }
-    return Check.instance;
-  }
-
-  async index(_: Request, response: Response): Promise<any> {
+  async check(_: Request, response: Response) {
     const statusCode = 200; // 500
 
     const uptime = sub(new Date(), {

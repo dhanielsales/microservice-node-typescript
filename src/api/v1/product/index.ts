@@ -1,23 +1,14 @@
 import { ProductsRepository } from '@app/v1/product';
 import { validateProductCreate } from '@model/product';
+import { ApiImpl, RequestMethod, Request, Response } from '@model/api';
 
-import { Router, Request, Response } from 'express';
+export class ProductApi extends ApiImpl {
+  constructor() {
+    super()
 
-export class ProductApi {
-  private static instance: ProductApi;
-  router: Router = Router();
-
-  private constructor() {
-    this.router.get('/', this.index);
-    this.router.get('/:id', this.show);
-    this.router.post('/', this.create)
-  }
-
-  static getInstance(): ProductApi {
-    if (!ProductApi.instance) {
-      ProductApi.instance = new ProductApi()
-    }
-    return ProductApi.instance
+    this.applyRoute(RequestMethod.GET, '/', this.index);
+    this.applyRoute(RequestMethod.GET, '/:id', this.show);
+    this.applyRoute(RequestMethod.POST, '/', this.create)
   }
 
   async index(_: Request, response: Response): Promise<any> {
