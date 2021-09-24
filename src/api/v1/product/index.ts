@@ -4,11 +4,11 @@ import { ApiImpl, RequestMethod, Request, Response } from '@model/api';
 
 export class ProductApi extends ApiImpl {
   constructor() {
-    super()
+    super();
 
     this.applyRoute(RequestMethod.GET, '/', this.index);
     this.applyRoute(RequestMethod.GET, '/:id', this.show);
-    this.applyRoute(RequestMethod.POST, '/', this.create)
+    this.applyRoute(RequestMethod.POST, '/', this.create);
   }
 
   async index(_: Request, response: Response): Promise<any> {
@@ -34,5 +34,5 @@ export class ProductApi extends ApiImpl {
     const data = await repository.addProduct(product);
 
     return response.status(200).json(data);
-  }  
+  }
 }

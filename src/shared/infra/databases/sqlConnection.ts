@@ -15,6 +15,7 @@ export function getSqlConnector(): SqlConnection {
   connection = knex(dbConfig);
 
   new AppLogger({
+    date: new Date(),
     message: 'Success when connected with Sql database.',
     type: 'INFO',
   });

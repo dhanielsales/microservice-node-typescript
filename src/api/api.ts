@@ -1,5 +1,5 @@
 import 'express-async-errors'; // TODO Abstrair essa implementação para outra camada
-import express from 'express'
+import express from 'express';
 
 import { exceptionsHandler } from '@api/middlewares/conventional/exceptionsHandler';
 import AppLogger from '@shared/infra/agregators/AppLogger';
@@ -19,7 +19,7 @@ export class Api extends ApiImpl {
   private readonly v0: V0;
 
   private constructor() {
-    super()
+    super();
     // Instancia todas as versões da API
     this.v1 = new V1();
     this.v0 = new V0();
@@ -35,11 +35,11 @@ export class Api extends ApiImpl {
 
   static getInstance(): Api {
     if (!Api.instance) {
-      Api.instance = new Api()
+      Api.instance = new Api();
     }
     return Api.instance;
   }
-  
+
   private applyGroups() {
     this.applyGroup('/health', this.health.getRouter());
     this.applyGroup('/v0', this.v0.getRouter());

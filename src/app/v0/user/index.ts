@@ -9,22 +9,22 @@ export class UserRepository {
 
   static getInstance(): UserRepository {
     if (!UserRepository.instance) {
-      UserRepository.instance = new UserRepository()
+      UserRepository.instance = new UserRepository();
     }
-    return UserRepository.instance
+    return UserRepository.instance;
   }
 
   public async getUsers(): Promise<User[]> {
-    const { store } = Service.getInstance()
-    const { user } = store.sql
+    const { store } = Service.getInstance();
+    const { user } = store.sql;
     const result = await user.getAll();
 
     return result;
   }
 
   public async getUser(id: string): Promise<User | null> {
-    const { store } = Service.getInstance()
-    const { user } = store.sql
+    const { store } = Service.getInstance();
+    const { user } = store.sql;
     const result = await user.getOne(id);
 
     if (!result) {

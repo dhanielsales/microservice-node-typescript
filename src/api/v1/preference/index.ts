@@ -1,9 +1,9 @@
 import { PreferenceRepository } from '@app/v1/preference';
 import { ApiImpl, RequestMethod, Request, Response } from '@model/api';
 
-export class PreferenceApi extends ApiImpl  {
+export class PreferenceApi extends ApiImpl {
   constructor() {
-    super()
+    super();
 
     this.applyRoute(RequestMethod.GET, '/', this.index);
     this.applyRoute(RequestMethod.GET, '/:id', this.show);

@@ -27,7 +27,7 @@ export default class AppLogger {
     this.type = type;
 
     const formatedType = colorizeText(type, typeColors[type] as any);
-    const formatedDate = format(new Date(), 'dd-MM-yyyy HH:mm:ss');
+    const formatedDate = format(date, 'dd-MM-yyyy HH:mm:ss');
 
     const finalMessage = error
       ? `[${formatedType}] ${colorizeText(formatedDate, 'bright')} - ${message} - ${error}`

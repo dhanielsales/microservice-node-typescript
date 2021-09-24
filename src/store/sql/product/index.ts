@@ -6,13 +6,13 @@ export class ProductStore {
   private static instance: ProductStore;
   private readonly connection: SqlConnection = getSqlConnector();
 
-  private constructor() { }
+  private constructor() {}
 
   static getInstance(): ProductStore {
     if (!ProductStore.instance) {
-      ProductStore.instance = new ProductStore()
+      ProductStore.instance = new ProductStore();
     }
-    return ProductStore.instance
+    return ProductStore.instance;
   }
 
   public async getAll(): Promise<Product[]> {
@@ -33,7 +33,11 @@ export class ProductStore {
 
   public async insertOne(product: Product): Promise<Product> {
     await this.connection.insert(product).into('products');
-    const newProduct = await this.connection.select('*').from('products').where({ id: product.id }).limit(1);
+    const newProduct = await this.connection
+      .select('*')
+      .from('products')
+      .where({ id: product.id })
+      .limit(1);
 
     return newProduct[0];
   }

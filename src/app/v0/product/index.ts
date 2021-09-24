@@ -9,22 +9,22 @@ export class ProductsRepository {
 
   static getInstance(): ProductsRepository {
     if (!ProductsRepository.instance) {
-      ProductsRepository.instance = new ProductsRepository()
+      ProductsRepository.instance = new ProductsRepository();
     }
-    return ProductsRepository.instance
-  } 
-  
+    return ProductsRepository.instance;
+  }
+
   public async getProducts(): Promise<Product[]> {
-    const { store } = Service.getInstance()
-    const { product } = store.sql
+    const { store } = Service.getInstance();
+    const { product } = store.sql;
     const results = await product.getAll();
 
     return results;
   }
 
   public async getProduct(id: string): Promise<Product> {
-    const { store } = Service.getInstance()
-    const { product } = store.sql
+    const { store } = Service.getInstance();
+    const { product } = store.sql;
     const result = await product.getOne(id);
 
     if (!result) {

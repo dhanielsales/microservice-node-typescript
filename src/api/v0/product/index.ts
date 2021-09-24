@@ -3,12 +3,12 @@ import { ApiImpl, RequestMethod, Request, Response } from '@model/api';
 
 export class ProductApi extends ApiImpl {
   constructor() {
-    super()
+    super();
 
     this.applyRoute(RequestMethod.GET, '/', this.index);
     this.applyRoute(RequestMethod.GET, '/:id', this.show);
   }
-  
+
   async index(_: Request, response: Response) {
     const repository = ProductsRepository.getInstance();
     const data = await repository.getProducts();

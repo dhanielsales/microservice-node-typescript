@@ -2,7 +2,7 @@
 
 export class Comms {
   private static instance: Comms;
-  private constructor() { }
+  private constructor() {}
 
   static getInstance(): Comms {
     if (!Comms.instance) {

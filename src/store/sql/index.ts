@@ -1,8 +1,8 @@
-import { SqlConnection } from "@model/sql";
-import { getSqlConnector } from "@shared/infra/database/sqlConnection";
+import { SqlConnection } from '@model/sql';
+import { getSqlConnector } from '@shared/infra/database/sqlConnection';
 
-import { ProductStore } from "@store/sql/product";
-import { UserStore } from "@store/sql/user";
+import { ProductStore } from '@store/sql/product';
+import { UserStore } from '@store/sql/user';
 
 export class Sql {
   private static instance: Sql;
@@ -11,9 +11,9 @@ export class Sql {
   public readonly user: UserStore;
 
   private constructor() {
-    this.connection = getSqlConnector() // TODO está acoplado, poderia ser com injeção de dependencias e inversão de dependencias.
-    this.product = ProductStore.getInstance()
-    this.user = UserStore.getInstance()
+    this.connection = getSqlConnector(); // TODO está acoplado, poderia ser com injeção de dependencias e inversão de dependencias.
+    this.product = ProductStore.getInstance();
+    this.user = UserStore.getInstance();
   }
 
   static getInstance(): Sql {

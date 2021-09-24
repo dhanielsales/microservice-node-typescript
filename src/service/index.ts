@@ -11,10 +11,10 @@ export class Service {
   public readonly api: Api;
 
   private constructor() {
-    this.store = Store.getInstance()
-    this.comms = Comms.getInstance()
-    this.cache = Cache.getInstance()
-    this.api = Api.getInstance()
+    this.store = Store.getInstance();
+    this.comms = Comms.getInstance();
+    this.cache = Cache.getInstance();
+    this.api = Api.getInstance();
   }
 
   static getInstance(): Service {
@@ -27,8 +27,7 @@ export class Service {
   // TODO Faz sentido realmente dessa forma?
   async start(): Promise<void> {
     if (this.api) {
-      return await this.api.initServer(Service.instance)
+      return await this.api.initServer(Service.instance);
     }
   }
 }
-    

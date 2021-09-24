@@ -5,9 +5,9 @@ export class Health extends ApiImpl {
   public readonly check: Check;
 
   constructor() {
-    super()
+    super();
     this.check = new Check();
-    
-    this.applyGroup('/check', this.check.getRouter())
+
+    this.applyGroup('/check', this.check.getRouter());
   }
 }

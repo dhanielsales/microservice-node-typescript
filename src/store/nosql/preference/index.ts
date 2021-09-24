@@ -1,5 +1,5 @@
 import { Preference } from '@model/preference';
-import { NoSqlConnection } from '@model/noSql';
+// import { NoSqlConnection } from '@model/noSql';
 
 const preferenceMock: Preference[] = [
   {
@@ -16,13 +16,13 @@ const preferenceMock: Preference[] = [
 
 export class PreferenceStore {
   private static instance: PreferenceStore;
-  private constructor() { }
+  private constructor() {}
 
   static getInstance(): PreferenceStore {
     if (!PreferenceStore.instance) {
-      PreferenceStore.instance = new PreferenceStore()
+      PreferenceStore.instance = new PreferenceStore();
     }
-    return PreferenceStore.instance
+    return PreferenceStore.instance;
   }
 
   public async getOne(id: string): Promise<Preference> {
@@ -32,7 +32,7 @@ export class PreferenceStore {
   }
 
   public async getAll(): Promise<Preference[]> {
-    const preferences = preferenceMock
+    const preferences = preferenceMock;
 
     return preferences;
   }

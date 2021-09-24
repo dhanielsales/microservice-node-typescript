@@ -1,7 +1,7 @@
-import { Redis } from 'ioredis';
-import { getMemDbConnection } from '@shared/infra/database/memdbConnection';
+// import { Redis } from 'ioredis';
+// import { getMemDbConnection } from '@shared/infra/database/memdbConnection';
 
-import { Cache as CacheInterface } from '@model/cache';
+// import { Cache as CacheInterface } from '@model/cache';
 
 // export class Cache {
 //   private memDb: Redis;
@@ -21,7 +21,7 @@ import { Cache as CacheInterface } from '@model/cache';
 
 export class Cache {
   private static instance: Cache;
-  private constructor() { }
+  private constructor() {}
 
   static getInstance(): Cache {
     if (!Cache.instance) {

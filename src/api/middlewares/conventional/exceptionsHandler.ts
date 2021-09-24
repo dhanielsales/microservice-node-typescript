@@ -3,6 +3,7 @@ import AppLogger from '@shared/infra/agregators/AppLogger';
 import { Middleware } from '@model/api';
 
 export const exceptionsHandler: Middleware = (err, request, response) => {
+  console.log('AQUII exceptionsHandler');
   if (err instanceof AppError) {
     return response.status(err.statusCode).json({
       status: 'error',
@@ -21,4 +22,4 @@ export const exceptionsHandler: Middleware = (err, request, response) => {
     status: 'error',
     message: 'Internal Server Error',
   });
-}
+};

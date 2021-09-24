@@ -16,7 +16,7 @@ export class App {
 
   static getInstance(): App {
     if (!App.instance) {
-      App.instance = new App()
+      App.instance = new App();
     }
     return App.instance;
   }

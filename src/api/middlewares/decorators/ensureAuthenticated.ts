@@ -17,7 +17,7 @@ export function EnsureAuthenticated(): Decorator {
   return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value;
 
-    descriptor.value = async (request: Request, response: Response, next: NextFunction) => {
+    descriptor.value = async (request: Request, response: Response, _: NextFunction) => {
       const authHeader = request.headers.authorization;
 
       if (!authHeader) {

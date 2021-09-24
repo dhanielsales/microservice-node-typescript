@@ -9,7 +9,7 @@ export class V1 extends ApiImpl {
   public readonly preference: PreferenceApi;
 
   constructor() {
-    super()
+    super();
     // Cria instancia de todas as apis V1
     this.user = new UserApi();
     this.product = new ProductApi();

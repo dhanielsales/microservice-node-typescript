@@ -3,10 +3,9 @@ import { UserRepository } from '@app/v1/user';
 import { validateUserCreate, validateUserUpdate } from '@model/user';
 import { ApiImpl, RequestMethod, Request, Response } from '@model/api';
 
-
 export class UserApi extends ApiImpl {
   constructor() {
-    super()
+    super();
 
     this.applyRoute(RequestMethod.GET, '/', this.index);
     this.applyRoute(RequestMethod.GET, '/:id', this.show);
