@@ -10,7 +10,7 @@ export class Health {
   private constructor() {
     this.router = Router();
     this.check = Check.getInstance();
-    
+
     this.router.use('/check', this.check.router);
   }
 

@@ -12,9 +12,9 @@ export class PreferenceApi {
 
   static getInstance(): PreferenceApi {
     if (!PreferenceApi.instance) {
-      PreferenceApi.instance = new PreferenceApi()
+      PreferenceApi.instance = new PreferenceApi();
     }
-    return PreferenceApi.instance
+    return PreferenceApi.instance;
   }
 
   async index(_: Request, response: Response): Promise<any> {

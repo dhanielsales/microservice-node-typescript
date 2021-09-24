@@ -13,7 +13,8 @@
     "start": "yarn build && node dist/index.js",
     "migration:create": "db-migrate create --sql-file",
     "migration:run": "db-migrate up",
-    "migration:rollback": "db-migrate down"
+    "migration:rollback": "db-migrate down",
+    "lint": "eslint './src/**/*' --fix"
   },
   "dependencies": {
     "@types/ioredis": "^4.27.1",

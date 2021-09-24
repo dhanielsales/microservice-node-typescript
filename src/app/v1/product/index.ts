@@ -6,18 +6,18 @@ import { v4 } from 'uuid';
 
 export class ProductsRepository {
   private static instance: ProductsRepository;
-  private constructor() { }
+  private constructor() {}
 
   static getInstance(): ProductsRepository {
     if (!ProductsRepository.instance) {
-        ProductsRepository.instance = new ProductsRepository();
+      ProductsRepository.instance = new ProductsRepository();
     }
     return ProductsRepository.instance;
   }
 
   public async getProducts(): Promise<Product[]> {
     const { store } = Service.getInstance();
-    const { product } = store.sql
+    const { product } = store.sql;
     const results = await product.getAll();
 
     return results;
@@ -25,7 +25,7 @@ export class ProductsRepository {
 
   public async getProduct(id: string): Promise<Product | null> {
     const { store } = Service.getInstance();
-    const { product } = store.sql
+    const { product } = store.sql;
     const result = await product.getOne(id);
 
     if (!result) {
@@ -40,7 +40,7 @@ export class ProductsRepository {
     newProduct.id = id;
 
     const { store } = Service.getInstance();
-    const { product } = store.sql
+    const { product } = store.sql;
     const result = await product.insertOne(newProduct);
 
     return result;

@@ -34,11 +34,11 @@ export class Api {
 
   static getInstance(): Api {
     if (!Api.instance) {
-      Api.instance = new Api()
+      Api.instance = new Api();
     }
     return Api.instance;
   }
-  
+
   private instanceRoutes() {
     this.router.use('/health', this.health.router);
     this.router.use('/v0', this.v0.router);

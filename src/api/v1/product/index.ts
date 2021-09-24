@@ -10,14 +10,14 @@ export class ProductApi {
   private constructor() {
     this.router.get('/', this.index);
     this.router.get('/:id', this.show);
-    this.router.post('/', this.create)
+    this.router.post('/', this.create);
   }
 
   static getInstance(): ProductApi {
     if (!ProductApi.instance) {
-      ProductApi.instance = new ProductApi()
+      ProductApi.instance = new ProductApi();
     }
-    return ProductApi.instance
+    return ProductApi.instance;
   }
 
   async index(_: Request, response: Response): Promise<any> {
@@ -43,5 +43,5 @@ export class ProductApi {
     const data = await repository.addProduct(product);
 
     return response.status(200).json(data);
-  }  
+  }
 }

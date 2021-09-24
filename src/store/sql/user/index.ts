@@ -6,13 +6,13 @@ export class UserStore {
   private static instance: UserStore;
   private readonly connection: SqlConnection = getSqlConnector();
 
-  private constructor() { }
+  private constructor() {}
 
   static getInstance(): UserStore {
     if (!UserStore.instance) {
-      UserStore.instance = new UserStore()
+      UserStore.instance = new UserStore();
     }
-    return UserStore.instance
+    return UserStore.instance;
   }
 
   public async getAll(): Promise<User[]> {
@@ -37,7 +37,7 @@ export class UserStore {
   public async updateOne(user: User, id: string): Promise<User | null> {
     await this.connection('users').update(user).where({ id });
     const updatedUser = await this.connection.select('*').from('users').where({ id }).limit(1);
-    return updatedUser[0]
+    return updatedUser[0];
   }
 
   public async removeOne(id: string): Promise<number | null> {

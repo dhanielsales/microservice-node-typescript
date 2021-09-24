@@ -7,5 +7,5 @@ import { Service } from '@service/index';
   const service = Service.getInstance();
 
   // Iniciando o serviço
-  await service.start()
+  await service.start();
 })();

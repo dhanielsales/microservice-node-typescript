@@ -14,7 +14,7 @@ export class ProductApi {
     if (!ProductApi.instance) {
       ProductApi.instance = new ProductApi();
     }
-    return ProductApi.instance
+    return ProductApi.instance;
   }
 
   async index(_: Request, response: Response): Promise<any> {

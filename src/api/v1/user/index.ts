@@ -19,7 +19,7 @@ export class UserApi {
     if (!UserApi.instance) {
       UserApi.instance = new UserApi();
     }
-    return UserApi.instance
+    return UserApi.instance;
   }
 
   async index(_: Request, response: Response): Promise<any> {
@@ -29,7 +29,7 @@ export class UserApi {
     return response.json(data);
   }
 
-  // @EnsureAuthenticated()
+  @EnsureAuthenticated()
   async show(request: Request, response: Response): Promise<any> {
     const { id } = request.params;
     const repository = UserRepository.getInstance();

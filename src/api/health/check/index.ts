@@ -1,4 +1,3 @@
-
 import { Router, Request, Response } from 'express';
 import { sub } from 'date-fns';
 
@@ -23,13 +22,13 @@ export class Check {
     const uptime = sub(new Date(), {
       seconds: process.uptime(),
     }).getTime();
-  
+
     const healthcheck = {
       start: uptime,
       now: new Date().getTime(),
       message: 'available', // unavailable
     };
-  
+
     return response.status(statusCode).json(healthcheck);
   }
 }

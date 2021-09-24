@@ -7,7 +7,7 @@ let connection: SqlConnection;
 
 // TODO adicionar validação de conecção com o banco
 export function getSqlConnector(): SqlConnection {
-  if (connection) return connection
+  if (connection) return connection;
   if (!dbConfig) {
     throw new Error(`Failed to get Sql configuration for env:${process.env.NODE_ENV}`);
   }

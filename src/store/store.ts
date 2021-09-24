@@ -7,14 +7,14 @@ export class Store {
   public readonly noSql: NoSql;
 
   private constructor() {
-    this.sql = Sql.getInstance()
-    this.noSql = NoSql.getInstance()
+    this.sql = Sql.getInstance();
+    this.noSql = NoSql.getInstance();
   }
-  
+
   static getInstance(): Store {
     if (!Store.instance) {
-      Store.instance = new Store()
+      Store.instance = new Store();
     }
-    return Store.instance
+    return Store.instance;
   }
 }
