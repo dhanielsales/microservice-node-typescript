@@ -3,17 +3,6 @@ import { Service } from '@service/index';
 import AppError from '@shared/infra/agregators/AppError';
 
 export class ProductsRepository {
-  private static instance: ProductsRepository;
-
-  private constructor() {}
-
-  static getInstance(): ProductsRepository {
-    if (!ProductsRepository.instance) {
-      ProductsRepository.instance = new ProductsRepository();
-    }
-    return ProductsRepository.instance;
-  }
-
   public async getProducts(): Promise<Product[]> {
     const { store } = Service.getInstance();
     const { product } = store.sql;

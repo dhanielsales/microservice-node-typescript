@@ -6,16 +6,6 @@ import { User } from '@model/user';
 import { Service } from '@service/index';
 
 export class UserRepository {
-  private static instance: UserRepository;
-  private constructor() {}
-
-  static getInstance(): UserRepository {
-    if (!UserRepository.instance) {
-      UserRepository.instance = new UserRepository();
-    }
-    return UserRepository.instance;
-  }
-
   public async getUsers(): Promise<User[]> {
     const { store } = Service.getInstance();
     const { user } = store.sql;

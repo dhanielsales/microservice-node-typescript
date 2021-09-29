@@ -1,5 +1,4 @@
 import { Router } from 'express';
-
 import { Check } from '@api/health/check';
 
 export class Health {

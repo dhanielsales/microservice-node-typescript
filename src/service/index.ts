@@ -1,5 +1,5 @@
 import { Store } from '@store/store';
-import { Comms } from '@comms/comms';
+import { Comms } from 'comm/comms';
 import { Api } from '@api/api';
 import { Cache } from '@shared/infra/agregators/Cache';
 
