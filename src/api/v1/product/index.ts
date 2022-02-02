@@ -3,21 +3,13 @@ import { validateProductCreate } from '@model/product';
 
 import { Router, Request, Response } from 'express';
 
-export class ProductApi {
-  private static instance: ProductApi;
-  router: Router = Router();
+export class Product {
+  public readonly router: Router = Router();
 
-  private constructor() {
+  constructor() {
     this.router.get('/', this.index);
     this.router.get('/:id', this.show);
     this.router.post('/', this.create);
-  }
-
-  static getInstance(): ProductApi {
-    if (!ProductApi.instance) {
-      ProductApi.instance = new ProductApi();
-    }
-    return ProductApi.instance;
   }
 
   async index(_: Request, response: Response): Promise<any> {

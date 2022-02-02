@@ -3,16 +3,12 @@ import { SqlConnection } from '@model/sql';
 import knex from 'knex';
 import AppLogger from '@shared/infra/agregators/AppLogger';
 
-let connection: SqlConnection;
-
-// TODO adicionar validação de conecção com o banco
-export function getSqlConnector(): SqlConnection {
-  if (connection) return connection;
+export function getSqlDatabaseConnector(): SqlConnection {
   if (!dbConfig) {
     throw new Error(`Failed to get Sql configuration for env:${process.env.NODE_ENV}`);
   }
 
-  connection = knex(dbConfig);
+  const connection = knex(dbConfig);
 
   new AppLogger({
     date: new Date(),

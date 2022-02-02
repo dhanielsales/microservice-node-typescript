@@ -2,20 +2,18 @@ import { Store } from '@store/store';
 import { Comms } from 'comm/comms';
 import { Api } from '@api/api';
 import { Cache } from '@shared/infra/agregators/Cache';
+import { App } from '@app/app';
+
+import { getSqlDatabaseConnector } from '@shared/infra/database/sql-connection';
+import { getNoSqlDatabaseConnector } from '@shared/infra/database/no-sql-connection';
 
 export class Service {
   private static instance: Service;
-  public readonly store: Store;
-  public readonly comms: Comms;
-  public readonly cache: Cache;
-  public readonly api: Api;
-
-  private constructor() {
-    this.store = Store.getInstance();
-    this.comms = Comms.getInstance();
-    this.cache = Cache.getInstance();
-    this.api = Api.getInstance();
-  }
+  private store: Store;
+  private comms: Comms;
+  private cache: Cache;
+  private api: Api;
+  private app: App;
 
   static getInstance(): Service {
     if (!Service.instance) {
@@ -24,10 +22,48 @@ export class Service {
     return Service.instance;
   }
 
-  // TODO Faz sentido realmente dessa forma?
   async start(): Promise<void> {
-    if (this.api) {
-      return await this.api.initServer(Service.instance);
-    }
+    // Store configures
+    const sqlConnection = await getSqlDatabaseConnector();
+    const noSqlConnection = await getNoSqlDatabaseConnector();
+
+    this.store = new Store({
+      noSqlConnection,
+      sqlConnection,
+    });
+
+    // Communication configures
+    this.comms = new Comms();
+
+    // Cache configures
+    this.cache = new Cache();
+
+    // Api configures
+    this.api = new Api();
+
+    // App configures
+    this.app = new App();
+
+    return await this.api.startServer();
+  }
+
+  public getStore(): Store {
+    return this.store;
+  }
+
+  public getComms(): Comms {
+    return this.comms;
+  }
+
+  public getCache(): Cache {
+    return this.cache;
+  }
+
+  public getApi(): Api {
+    return this.api;
+  }
+
+  public getApp(): App {
+    return this.app;
   }
 }

@@ -1,25 +1,17 @@
-import { EnsureAuthenticated } from '@api/middlewares/decorators/ensureAuthenticated';
+import { EnsureAuthenticated } from '@shared/presentation/middlewares/decorators/ensureAuthenticated';
 import { UserRepository } from '@app/v1/user';
 import { validateUserCreate, validateUserUpdate } from '@model/user';
 import { Router, Request, Response } from 'express';
 
-export class UserApi {
-  private static instance: UserApi;
-  router: Router = Router();
+export class User {
+  public readonly router: Router = Router();
 
-  private constructor() {
+  constructor() {
     this.router.get('/', this.index);
     this.router.get('/:id', this.show);
     this.router.post('/', this.create);
     this.router.put('/:id', this.update);
     this.router.delete('/:id', this.delete);
-  }
-
-  static getInstance(): UserApi {
-    if (!UserApi.instance) {
-      UserApi.instance = new UserApi();
-    }
-    return UserApi.instance;
   }
 
   async index(_: Request, response: Response): Promise<any> {

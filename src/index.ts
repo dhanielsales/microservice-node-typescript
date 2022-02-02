@@ -1,4 +1,5 @@
 import '@shared/config/enviroment.config';
+import '@shared/config/api.config';
 
 import { Service } from '@service/index';
 

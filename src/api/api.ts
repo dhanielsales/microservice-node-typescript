@@ -1,10 +1,8 @@
-import 'express-async-errors';
-import express, { Router } from 'express';
+import core, { Express } from 'express';
 
-import { exceptionsHandler } from '@api/middlewares/conventional/exceptionsHandler';
+import { exceptionsHandler } from '@shared/presentation/middlewares/conventional/exceptionsHandler';
+
 import AppLogger from '@shared/infra/agregators/AppLogger';
-
-import { Service } from '@service/index';
 
 import { V0 } from '@api/v0';
 import { V1 } from '@api/v1';
@@ -12,17 +10,18 @@ import { Health } from '@api/health';
 
 // import printRoutes from '@shared/utils/printRoutes';
 export class Api {
-  private static instance: Api;
-  public readonly router: Router = Router();
+  public readonly router: Express;
   private readonly health: Health;
   private readonly v1: V1;
   private readonly v0: V0;
 
-  private constructor() {
+  constructor() {
+    this.router = core();
+
     // Instancia todas as versões da API
-    this.v1 = V1.getInstance();
-    this.v0 = V0.getInstance();
-    this.health = Health.getInstance();
+    this.v1 = new V1();
+    this.v0 = new V0();
+    this.health = new Health();
     // TODO: Verificar o env por quais versões de API devem subir
 
     // Instancia todas as rotas de acordo com as versões da API
@@ -30,13 +29,6 @@ export class Api {
 
     // Aplica todos os middlewares na API
     this.applyMiddlewares();
-  }
-
-  static getInstance(): Api {
-    if (!Api.instance) {
-      Api.instance = new Api();
-    }
-    return Api.instance;
   }
 
   private instanceRoutes() {
@@ -51,20 +43,10 @@ export class Api {
     this.router.use(exceptionsHandler);
   }
 
-  async initServer(service: Service) {
-    // Criando instancia do HTTP Server
-    const server = express();
+  async startServer() {
+    this.router.use(core.json());
 
-    // Aplicando instancia com JSON
-    server.use(express.json());
-
-    // Extrai instancia da Api do App
-    const { api } = service;
-
-    // Adiciona todas as rotas ao App
-    server.use(api.router);
-
-    server.listen(3333, () => {
+    this.router.listen(3333, () => {
       // Mostra todas as rotas da aplicação
       // printRoutes(server._router.stack);
 
