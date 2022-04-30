@@ -52,3 +52,7 @@ GET /v1/product/:id
 
 - **Dev:**
 - **Prod:**
+
+#### TO DO
+
+- [ ] Fazer uma classe de Config para inicializar as configurações externas (env, etc.) no inicio da aplicação.
